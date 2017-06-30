@@ -1,0 +1,19 @@
+language: go
+
+go:
+  - 1.15.x
+  - 1.16.x
+  - master
+
+branches:
+  only:
+    - master
+
+before_install:
+  - go get github.com/mattn/goveralls
+
+script:
+  - go vet .
+  - go build -v .
+  - go test -v -covermode=count -coverprofile=coverage.out
+  - $HOME/gopath/bin/goveralls -coverprofile=coverage.out -service=travis-ci
